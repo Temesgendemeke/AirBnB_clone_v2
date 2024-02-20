@@ -123,6 +123,8 @@ class HBNBCommand(cmd.Cmd):
         matches = re.findall(pattern, args)
         para = {}
         
+
+        
         for key, values in matches:
             value = values.replace("_", " " )
             float_pattern = re.search(r"^-?\d+(\.\d+)?$", values)
@@ -132,15 +134,7 @@ class HBNBCommand(cmd.Cmd):
             elif intger_pattern is not None:
                 value = int(value)
             para[key] = value
-            # print(f"{key} == {value}")
-            
-        # if not args:
-        #     print("** class name missing **")
-        #     return
-        # elif args not in HBNBCommand.classes:
-        #     print("** class doesn't exist **")
-        #     return
-        
+           
         new_instance = HBNBCommand.classes[cname](*para)
         storage.save()
         print(new_instance.id)
