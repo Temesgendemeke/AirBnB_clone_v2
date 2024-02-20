@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,13 +116,32 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
-            print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
+        
+        cname = args.split()[0]
+        
+        pattern = r"(\w+)=(.+)" 
+        matches = re.findall(pattern, args)
+        para = {}
+        
+        for key, values in matches:
+            value = values.replace("_", " " )
+            float_pattern = re.search(r"^-?\d+(\.\d+)?$", values)
+            intger_pattern = re.search(r"^-?\d", values)
+            if float_pattern is not None:
+                value = float(value)
+            elif intger_pattern is not None:
+                value = int(value)
+            para[key] = value
+            # print(f"{key} == {value}")
+            
+        # if not args:
+        #     print("** class name missing **")
+        #     return
+        # elif args not in HBNBCommand.classes:
+        #     print("** class doesn't exist **")
+        #     return
+        
+        new_instance = HBNBCommand.classes[cname](*para)
         storage.save()
         print(new_instance.id)
         storage.save()
