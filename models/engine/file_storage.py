@@ -64,4 +64,8 @@ class FileStorage:
         if obj is None:
             return
         del obj
+    def close(self):
+        """_summary_
+        """
+        self.reload()
     
