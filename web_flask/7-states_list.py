@@ -19,9 +19,9 @@ def state_html():
     Returns:
         _type_: _description_
     """
-    return render_template("7-states_list.html", states = storage.all("State"))
+    return render_template("7-states_list.html", states=storage.all("State"))
 
-@app.teardown_appcontext()
+@app.teardown_appcontext
 def teardown(exc):
     """_summary_
 
